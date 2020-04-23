@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmcc.creditcard.dao.BankDao">
+    <select id="queryBankList" resultType="com.cmcc.creditcard.entity.Bank">
+		SELECT *
+		FROM tb_bank
+	</select>
+
+	<select id="queryBankByBankIndex" resultType="com.cmcc.creditcard.entity.Bank">
+		SELECT *
+		FROM tb_bank
+		WHERE
+		bank_index=#{bankIndex}
+	</select>
+</mapper>

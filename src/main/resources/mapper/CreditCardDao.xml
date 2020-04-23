@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmcc.creditcard.dao.CreditCardDao">
+    <select id="queryCreditCardByUserId" resultType="com.cmcc.creditcard.entity.CreditCard">
+		SELECT *
+		FROM tb_card
+		WHERE
+		user_id=#{userId}
+		order by due_day asc
+	</select>
+
+	<select id="queryCreditCardALL" resultType="com.cmcc.creditcard.entity.CreditCard">
+		SELECT *
+		FROM tb_card
+	</select>
+
+	<select id="queryCreditCardByCardId" resultType="com.cmcc.creditcard.entity.CreditCard">
+		SELECT *
+		FROM tb_card
+		WHERE
+		card_id=#{cardId}
+	</select>
+
+	<select id="queryCreditCardCountDue" resultType="Integer">
+		SELECT count(*)
+		FROM tb_card
+		WHERE
+		user_id=#{userId} and
+		duetask_status=1
+	</select>
+
+	<select id="queryCreditCardCountNoDue" resultType="Integer">
+		SELECT count(*)
+		FROM tb_card
+		WHERE
+		user_id=#{userId} and
+		duetask_status=0
+	</select>
+
+    <insert id="insertCreditCard" useGeneratedKeys="true" keyProperty="cardId"
+            keyColumn="card_id" parameterType="com.cmcc.creditcard.entity.CreditCard">
+		INSERT INTO
+		tb_card(card_id,card_name,create_time,update_time,bank_name,bill_day,due_day,user_id,duetask_status,image_url)
+		VALUES
+		(#{cardId},#{cardName},#{createTime},#{updateTime},#{bankName},#{billDay},#{dueDay},#{userId},#{duetaskStatus},#{imageUrl})
+	</insert>
+    <update id="updateCreditCard" parameterType="com.cmcc.creditcard.entity.CreditCard">
+        update tb_card
+        <set>
+            <if test="cardName != null">card_name=#{cardName},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+			<if test="updateTime != null">update_time=#{updateTime},</if>
+			<if test="bankName != null">bank_name=#{bankName},</if>
+			<if test="billDay != null">bill_day=#{billDay},</if>
+			<if test="dueDay != null">due_day=#{dueDay},</if>
+			<if test="userId != null">user_id=#{userId},</if>
+			<if test="duetaskStatus != null">duetask_status=#{duetaskStatus},</if>
+			<if test="imageUrl != null">image_url=#{imageUrl},</if>
+        </set>
+        where card_id=#{cardId}
+    </update>
+    <delete id="deletecreditCardByUserId">
+		DELETE FROM
+		tb_card
+		WHERE
+		user_id =
+		#{userId}
+	</delete>
+
+	<delete id="deletecreditCardByCardId">
+		DELETE FROM
+		tb_card
+		WHERE
+		card_id =
+		#{cardId}
+	</delete>
+</mapper>
