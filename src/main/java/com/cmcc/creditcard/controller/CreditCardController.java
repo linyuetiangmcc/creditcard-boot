@@ -57,7 +57,7 @@ public class CreditCardController {
 
         List<CreditCard> creditCardList = creditCardService.queryCreditCardByUserId(userInfo.getUserId());
 
-        if(creditCardList != null){
+        if(creditCardList != null && creditCardList.size() >=0){
             modelMap.put("success",true);
             modelMap.put("creditCardList",creditCardList);
         }
@@ -87,7 +87,6 @@ public class CreditCardController {
 
         CreditCard creditCard = new CreditCard();
         creditCard.setUserId(userInfo.getUserId());
-        //creditCard.setBackNumber("8888");
         creditCard.setCardName(creditCardApp.getCardName());
         creditCard.setBankName(bank.getBankName());
         creditCard.setBillDay(creditCardApp.getBillDayIndex() + 1);
